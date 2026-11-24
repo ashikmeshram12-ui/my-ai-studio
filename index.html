@@ -172,7 +172,7 @@ async function generateImage() {
   status.innerText = "Generating image...";
 
   try {
-    const response = await fetch("YOUR_CLOUDFLARE_WORKER_URL", {
+    const response = await fetch("https://my-ai-studio-api.ashikmeshram12.workers.dev/", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
