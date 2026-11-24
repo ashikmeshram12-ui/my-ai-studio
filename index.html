@@ -48,7 +48,49 @@
       <div class="tile" data-tool="music"><div class="ico">🎵</div><h3>AI Music</h3><p>Describe your music idea</p></div>
       <div class="tile" data-tool="chat"><div class="ico">💬</div><h3>AI Chat</h3><p>Try the local demo assistant</p></div>
       <div class="tile" data-tool="script"><div class="ico">✍️</div><h3>AI Script</h3><p>Draft a video idea</p></div>
-    </section>
+  <div class="tile" data-tool="movie">
+  <div class="ico">🎬</div>
+  <h3>AI Short Movie Maker</h3>
+  <p>Create cinematic short movies</p>
+</div>
+
+<div class="tile" data-tool="editor">
+  <div class="ico">🎞️</div>
+  <h3>AI Auto Video Editor</h3>
+  <p>Automatic editing, music and sound effects</p>
+</div>
+   
+<!-- AI SHORT MOVIE MAKER -->
+<div class="work" id="movie">
+  <h2>🎬 AI Short Movie Maker</h2>
+  <p>अपनी कहानी लिखें और उसे सीन में बदलें।</p>
+
+  <textarea id="movieStory" placeholder="अपनी फिल्म की कहानी यहाँ लिखें..." style="width:100%;min-height:120px;padding:12px;"></textarea>
+
+  <button onclick="makeMovieOutline()">Create Scene Plan</button>
+  <button onclick="copyOutput('movieOutput')">Copy Scene Plan</button>
+
+  <pre id="movieOutput" style="white-space:pre-wrap;"></pre>
+</div>
+
+<!-- AI AUTO VIDEO EDITOR -->
+<div class="work" id="editor">
+  <h2>🎞️ AI Auto Video Editor</h2>
+  <p>अपना वीडियो और बैकग्राउंड म्यूजिक चुनें।</p>
+
+  <label>Upload Video</label>
+  <input type="file" id="videoFile" accept="video/*">
+
+  <video id="videoPreview" controls style="width:100%;margin-top:15px;"></video>
+
+  <label>Upload Background Music</label>
+  <input type="file" id="musicFile" accept="audio/*">
+
+  <audio id="musicPreview" controls style="width:100%;margin-top:10px;"></audio>
+
+  <p>यह अभी वीडियो और ऑडियो का Preview Workspace है। Automatic editing और MP4 export बाद में जोड़ेंगे।</p>
+</div>
+ </section>
 
     <section class="section">
       <h2 id="toolTitle">Start creating</h2>
@@ -193,5 +235,46 @@ async function generateImage() {
     status.innerText = error.message;
   }
 }
+</script>
+
+<script>
+function makeMovieOutline() {
+  const story = document.getElementById("movieStory").value.trim();
+  const output = document.getElementById("movieOutput");
+
+  if (!story) {
+    output.textContent = "Please write your movie story first.";
+    return;
+  }
+
+  output.textContent =
+    "🎬 YOUR MOVIE SCENE PLAN\n\n" +
+    "Scene 1 — Opening\n" + story + "\n\n" +
+    "Scene 2 — Story Development\n" +
+    "Show the main character and the important events.\n\n" +
+    "Scene 3 — Main Conflict\n" +
+    "Show the biggest challenge in the story.\n\n" +
+    "Scene 4 — Climax\n" +
+    "Show the most exciting moment.\n\n" +
+    "Scene 5 — Ending\n" +
+    "Give the story a memorable ending.\n\n" +
+    "Note: This is an automatic draft, not a rendered movie.";
+}
+
+document.getElementById("videoFile").addEventListener("change", function() {
+  const file = this.files[0];
+  if (file) {
+    document.getElementById("videoPreview").src =
+      URL.createObjectURL(file);
+  }
+});
+
+document.getElementById("musicFile").addEventListener("change", function() {
+  const file = this.files[0];
+  if (file) {
+    document.getElementById("musicPreview").src =
+      URL.createObjectURL(file);
+  }
+});
 </script>
 </html>
