@@ -303,20 +303,29 @@ function makeMovieOutline() {
     "Note: This is an automatic draft, not a rendered movie.";
 }
 
-document.getElementById("videoFile").addEventListener("change", function() {
-  const file = this.files[0];
-  if (file) {
-    document.getElementById("videoPreview").src =
-      URL.createObjectURL(file);
-  }
-});
 
-document.getElementById("musicFile").addEventListener("change", function() {
-  const file = this.files[0];
-  if (file) {
-    document.getElementById("musicPreview").src =
-      URL.createObjectURL(file);
-  }
-});
+const videoFile = document.getElementById("videoFile");
+const musicFile = document.getElementById("musicFile");
+
+if (videoFile) {
+  videoFile.addEventListener("change", function() {
+    const file = this.files[0];
+    if (file) {
+      document.getElementById("videoPreview").src =
+        URL.createObjectURL(file);
+    }
+  });
+}
+
+if (musicFile) {
+  musicFile.addEventListener("change", function() {
+    const file = this.files[0];
+    if (file) {
+      document.getElementById("musicPreview").src =
+        URL.createObjectURL(file);
+    }
+  });
+}
+
 </script>
 </html>
