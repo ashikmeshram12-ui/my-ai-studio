@@ -94,7 +94,50 @@ function makePrompt(inputId,outId){const v=document.getElementById(inputId).valu
 function copyOutput(id){const t=document.getElementById(id).textContent;navigator.clipboard?.writeText(t).then(()=>alert("Copied!")).catch(()=>alert(t));}
 function speakText(){const t=document.getElementById("voiceText").value.trim();if(!t)return alert("Please type some text first.");if(!("speechSynthesis" in window))return alert("Speech is not supported in this browser.");speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t));}
 function stopVoice(){if("speechSynthesis" in window)speechSynthesis.cancel();}
-function sendChat(){const input=document.getElementById("chatInput"),v=input.value.trim();if(!v)return;const log=document.getElementById("chatlog");log.insertAdjacentHTML("beforeend",'<div class="bubble me"></div>');log.lastElementChild.textContent=v;const reply="Demo tip: turn your idea into a clear prompt by describing the subject, action, setting, style, lighting and camera angle. Real AI chat will be connected in a future version.";log.insertAdjacentHTML("beforeend",'<div class="bubble"></div>');log.lastElementChild.textContent=reply;input.value="";log.scrollTop=log.scrollHeight;}
+
+async function sendChat() {
+  const input = document.getElementById("chatInput");
+  const message = input.value.trim();
+  if (!message) return;
+
+  const log = document.getElementById("chatlog");
+
+  const userBubble = document.createElement("div");
+  userBubble.className = "bubble";
+  userBubble.textContent = "You: " + message;
+  log.appendChild(userBubble);
+
+  input.value = "";
+
+  const loading = document.createElement("div");
+  loading.className = "bubble";
+  loading.textContent = "My AI Studio is thinking...";
+  log.appendChild(loading);
+
+  try {
+    const response = await fetch(
+      "https://my-ai-studio-api.ashikmeshram12.workers.dev/",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: message })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "AI request failed");
+    }
+
+    loading.textContent = data.answer || "No answer received.";
+  } catch (error) {
+    loading.textContent = "Error: " + error.message;
+  }
+
+  log.scrollTop = log.scrollHeight;
+}
+
 function makeScript(){const t=document.getElementById("scriptTopic").value.trim();document.getElementById("scriptOutput").textContent=t?`VIDEO OUTLINE: ${t}\n\n1. Hook: Open with a surprising question.\n2. Intro: Explain what viewers will learn.\n3. Main points: Cover three useful ideas with examples.\n4. Closing: Summarize and invite viewers to comment.`:"Please enter a topic first.";}
 if("serviceWorker" in navigator && location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 </script>
