@@ -127,8 +127,19 @@
   </main>
   <footer>My AI Studio · Version 0.1 · Built as a free starter prototype</footer>
 </div>
-<script>
-const titles={welcome:"Start creating",image:"AI Image · Upload preview",video:"Image to Video · Prompt builder",voice:"AI Voice · Text to speech",music:"AI Music · Idea builder",chat:"AI Chat · Demo assistant",script:"AI Script · Outline"};
+<script
+const titles={
+  welcome:"Start creating",
+  image:"AI Image · Upload preview",
+  video:"Image to Video · Prompt builder",
+  voice:"AI Voice · Text to speech",
+  music:"AI Music · Idea builder",
+  chat:"AI Chat · Demo assistant",
+  script:"AI Script · Outline",
+  movie:"AI Short Movie Maker · Story to scenes",
+  editor:"AI Auto Video Editor · Video workspace"
+};
+welcome:"Start creating",image:"AI Image · Upload preview",video:"Image to Video · Prompt builder",voice:"AI Voice · Text to speech",music:"AI Music · Idea builder",chat:"AI Chat · Demo assistant",script:"AI Script · Outline"};
 document.querySelectorAll(".tile").forEach(tile=>tile.addEventListener("click",()=>showTool(tile.dataset.tool)));
 function showTool(name){document.querySelectorAll(".work").forEach(x=>x.classList.remove("active"));document.getElementById(name).classList.add("active");document.getElementById("toolTitle").textContent=titles[name];document.querySelector(".section").scrollIntoView({behavior:"smooth",block:"start"});}
 document.getElementById("imageFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const img=document.getElementById("imagePreview");img.src=URL.createObjectURL(f);img.style.display="block";});
