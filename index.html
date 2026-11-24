@@ -28,7 +28,38 @@
     footer{color:#8289a8;text-align:center;font-size:12px;padding:35px 0 15px}
     @media(max-width:720px){.wrap{padding:16px}.grid{grid-template-columns:repeat(2,1fr)}.hero{padding-top:18px}.tile{padding:14px;min-height:132px}}
     @media(max-width:420px){.grid{grid-template-columns:1fr 1fr}.pill{font-size:11px}}
-  </style>
+  
+/* My AI Studio Tool Panels */
+.work {
+  display: none;
+  background: #ffffff;
+  color: #222222;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 16px;
+  border: 1px solid #dddddd;
+}
+
+.work.active {
+  display: block;
+}
+
+.work textarea,
+.work input {
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 10px 0;
+}
+
+.work button {
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #7055e8;
+  color: white;
+  margin: 8px 5px 8px 0;
+}
+</style>
 </head>
 <body>
 <div class="wrap">
