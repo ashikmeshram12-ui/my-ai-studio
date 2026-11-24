@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101225">
+  <meta name="description" content="My AI Studio - your creative workspace">
+  <link rel="manifest" href="manifest.webmanifest">
+  <title>My AI Studio</title>
+  <style>
+    :root{--bg:#0d1020;--panel:#171b31;--panel2:#202641;--text:#f6f7ff;--muted:#aab0ca;--accent:#8b6cff;--line:#303653}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#292052 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+    .wrap{max-width:1120px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:34px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:18px}.logo{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#9a7aff,#4b8cff);display:grid;place-items:center;font-size:21px}
+    .pill{border:1px solid var(--line);border-radius:99px;padding:7px 12px;color:#c9c2ff;font-size:12px}
+    h1{font-size:clamp(30px,6vw,52px);line-height:1.08;letter-spacing:-1.5px;margin:0 0 12px}.sub{color:var(--muted);max-width:600px;margin:0 0 28px}
+    .hero{padding:28px 0 18px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .tile,.work{background:linear-gradient(160deg,#1b2039,#14182b);border:1px solid var(--line);border-radius:18px;padding:18px}
+    .tile{cursor:pointer;transition:.18s;min-height:140px}.tile:hover{transform:translateY(-3px);border-color:#8972ff}
+    .ico{font-size:27px;margin-bottom:10px}.tile h3{margin:0 0 4px;font-size:16px}.tile p{margin:0;color:var(--muted);font-size:13px}
+    .section{margin-top:28px}.section h2{font-size:19px;margin:0 0 13px}.work{display:none}.work.active{display:block}
+    input,textarea,button{font:inherit}textarea,input[type=text]{width:100%;background:#0f1325;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:12px;outline:none}
+    textarea{min-height:100px;resize:vertical}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    button{border:0;border-radius:12px;background:var(--accent);color:white;padding:11px 16px;font-weight:700;cursor:pointer}
+    button.secondary{background:#2a3150;border:1px solid var(--line)}.hint{color:var(--muted);font-size:12px;margin-top:9px}
+    .preview{max-width:100%;max-height:280px;border-radius:12px;margin-top:14px;display:none}.output{margin-top:14px;padding:13px;background:#0f1325;border:1px solid var(--line);border-radius:12px;white-space:pre-wrap;min-height:45px}
+    .chatlog{max-height:240px;overflow:auto;margin:12px 0}.bubble{padding:10px 12px;border-radius:12px;background:#252b47;margin:8px 0;white-space:pre-wrap}.bubble.me{background:#46377e;margin-left:12%}
+    footer{color:#8289a8;text-align:center;font-size:12px;padding:35px 0 15px}
+    @media(max-width:720px){.wrap{padding:16px}.grid{grid-template-columns:repeat(2,1fr)}.hero{padding-top:18px}.tile{padding:14px;min-height:132px}}
+    @media(max-width:420px){.grid{grid-template-columns:1fr 1fr}.pill{font-size:11px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo">✦</div><span>My AI Studio</span></div>
+    <div class="pill">YOUR CREATIVE WORKSPACE</div>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Create more.<br><span style="background:linear-gradient(90deg,#b59dff,#75baff);background-clip:text;color:transparent">Imagine without limits.</span></h1>
+      <p class="sub">Your all-in-one creative workspace. Choose a tool below to try the first demo. AI model connections will be added in the next build.</p>
+    </section>
+    <section class="grid" aria-label="AI tools">
+      <div class="tile" data-tool="image"><div class="ico">🎨</div><h3>AI Image</h3><p>Upload and preview an image</p></div>
+      <div class="tile" data-tool="video"><div class="ico">🎬</div><h3>Image to Video</h3><p>Prepare a video prompt</p></div>
+      <div class="tile" data-tool="voice"><div class="ico">🎙️</div><h3>AI Voice</h3><p>Listen to browser speech</p></div>
+      <div class="tile" data-tool="music"><div class="ico">🎵</div><h3>AI Music</h3><p>Describe your music idea</p></div>
+      <div class="tile" data-tool="chat"><div class="ico">💬</div><h3>AI Chat</h3><p>Try the local demo assistant</p></div>
+      <div class="tile" data-tool="script"><div class="ico">✍️</div><h3>AI Script</h3><p>Draft a video idea</p></div>
+    </section>
+
+    <section class="section">
+      <h2 id="toolTitle">Start creating</h2>
+      <div class="work active" id="welcome"><p style="color:var(--muted);margin:0">Select any tool above. This first version is a working interface prototype; real cloud AI generation requires connecting an AI service.</p></div>
+      <div class="work" id="image">
+        <h3>Image preview</h3><p class="hint">Choose a photo from your device. It stays in this browser preview.</p>
+        <input id="imageFile" type="file" accept="image/*"><img class="preview" id="imagePreview" alt="Your uploaded preview">
+      </div>
+      <div class="work" id="video">
+        <h3>Image-to-video prompt builder</h3><textarea id="videoPrompt" placeholder="Example: Make the person gently turn toward the camera, natural movement, cinematic lighting..."></textarea>
+        <div class="actions"><button onclick="makePrompt('videoPrompt','videoOutput')">Prepare prompt</button><button class="secondary" onclick="copyOutput('videoOutput')">Copy</button></div>
+        <div class="output" id="videoOutput">Your refined prompt will appear here.</div><p class="hint">This prepares a prompt; video rendering will be connected in a later phase.</p>
+      </div>
+      <div class="work" id="voice">
+        <h3>Text to speech</h3><textarea id="voiceText" placeholder="Type something to hear it spoken..."></textarea>
+        <div class="actions"><button onclick="speakText()">▶ Play voice</button><button class="secondary" onclick="stopVoice()">Stop</button></div><p class="hint">Uses the speech engine available in your browser/device. No voice file is generated yet.</p>
+      </div>
+      <div class="work" id="music">
+        <h3>Music idea builder</h3><textarea id="musicPrompt" placeholder="Example: Peaceful cinematic piano with soft strings, hopeful mood, 60 seconds..."></textarea>
+        <div class="actions"><button onclick="makePrompt('musicPrompt','musicOutput')">Prepare music brief</button><button class="secondary" onclick="copyOutput('musicOutput')">Copy</button></div>
+        <div class="output" id="musicOutput">Your music brief will appear here.</div><p class="hint">Music generation will be connected in a later phase.</p>
+      </div>
+      <div class="work" id="chat">
+        <h3>Studio assistant demo</h3><div class="chatlog" id="chatlog"><div class="bubble">Hi! I’m your My AI Studio demo assistant. Ask me for a creative prompt or an idea.</div></div>
+        <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()">
+        <div class="actions"><button onclick="sendChat()">Send message</button></div><p class="hint">This is a local demo, not a connected language model yet.</p>
+      </div>
+      <div class="work" id="script">
+        <h3>Video script starter</h3><input type="text" id="scriptTopic" placeholder="Enter your video topic">
+        <div class="actions"><button onclick="makeScript()">Create outline</button><button class="secondary" onclick="copyOutput('scriptOutput')">Copy</button></div>
+        <div class="output" id="scriptOutput">Your outline will appear here.</div>
+      </div>
+    </section>
+  </main>
+  <footer>My AI Studio · Version 0.1 · Built as a free starter prototype</footer>
+</div>
+<script>
+const titles={welcome:"Start creating",image:"AI Image · Upload preview",video:"Image to Video · Prompt builder",voice:"AI Voice · Text to speech",music:"AI Music · Idea builder",chat:"AI Chat · Demo assistant",script:"AI Script · Outline"};
+document.querySelectorAll(".tile").forEach(tile=>tile.addEventListener("click",()=>showTool(tile.dataset.tool)));
+function showTool(name){document.querySelectorAll(".work").forEach(x=>x.classList.remove("active"));document.getElementById(name).classList.add("active");document.getElementById("toolTitle").textContent=titles[name];document.querySelector(".section").scrollIntoView({behavior:"smooth",block:"start"});}
+document.getElementById("imageFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const img=document.getElementById("imagePreview");img.src=URL.createObjectURL(f);img.style.display="block";});
+function makePrompt(inputId,outId){const v=document.getElementById(inputId).value.trim();document.getElementById(outId).textContent=v?("Creative brief:\n"+v+"\n\nStyle: high quality, clear subject, coherent details, natural lighting, polished result."): "Please enter a description first.";}
+function copyOutput(id){const t=document.getElementById(id).textContent;navigator.clipboard?.writeText(t).then(()=>alert("Copied!")).catch(()=>alert(t));}
+function speakText(){const t=document.getElementById("voiceText").value.trim();if(!t)return alert("Please type some text first.");if(!("speechSynthesis" in window))return alert("Speech is not supported in this browser.");speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t));}
+function stopVoice(){if("speechSynthesis" in window)speechSynthesis.cancel();}
+function sendChat(){const input=document.getElementById("chatInput"),v=input.value.trim();if(!v)return;const log=document.getElementById("chatlog");log.insertAdjacentHTML("beforeend",'<div class="bubble me"></div>');log.lastElementChild.textContent=v;const reply="Demo tip: turn your idea into a clear prompt by describing the subject, action, setting, style, lighting and camera angle. Real AI chat will be connected in a future version.";log.insertAdjacentHTML("beforeend",'<div class="bubble"></div>');log.lastElementChild.textContent=reply;input.value="";log.scrollTop=log.scrollHeight;}
+function makeScript(){const t=document.getElementById("scriptTopic").value.trim();document.getElementById("scriptOutput").textContent=t?`VIDEO OUTLINE: ${t}\n\n1. Hook: Open with a surprising question.\n2. Intro: Explain what viewers will learn.\n3. Main points: Cover three useful ideas with examples.\n4. Closing: Summarize and invite viewers to comment.`:"Please enter a topic first.";}
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+</script>
+</body>
+</html>
